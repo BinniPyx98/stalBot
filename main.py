@@ -40,10 +40,10 @@ def checkScreensDir():
 
 def create_screenshot():
     path = getPath()
-    fullPath= path+'/screens'
+    fullPath = path + '/screens'
     screenName = 'screen.png'
     screenshot = pyautogui.screenshot()
-    screenshot.save(fullPath+'/'+screenName)
+    screenshot.save(fullPath + '/' + screenName)
 
 
 def loading_displaying_saving():
@@ -53,10 +53,23 @@ def loading_displaying_saving():
     cv2.imwrite('graygirl.jpg', img)
 
 
+def findProto(pathToProtoTmp):
+    found = pyautogui.locateOnScreen(pathToProtoTmp, grayscale=True, confidence=0.8)
+    print(found)
+
 checkScreensDir()
+path = getPath()
+pathToProtoTmp = path + '/screens/proto.png'
 
 start = True
 while start:
-    create_screenshot()
-    time.sleep(10)
+    # create_screenshot()
+    try:
+        findProto(pathToProtoTmp)
+    except pyautogui.ImageNotFoundException:
+        print("Image not found")
+        time.sleep(10)
+    else:
+        print('Image found')
+        time.sleep(140)
 
